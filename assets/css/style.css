@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 html {
@@ -35,7 +35,12 @@ body.dark a {
     left: 0;
     width: 100%;
     padding: 1rem 2rem;
-    z-index: 100;
+    z-index: 1000;
+    background: inherit; /* match theme background */
+}
+
+body {
+    padding-top: 80px; /* prevent navbar overlap */
 }
 
 .nav-content {
@@ -241,6 +246,7 @@ body.dark .tools-used span:hover {
 .bg-left {
   background: #f9f9f9; /* light mode background */
   transition: background 0.3s ease;
+  color: #ffc107;
 }
 
 .bg-right {
@@ -256,13 +262,14 @@ body.dark .tools-used span:hover {
   font-weight: 400;
   font-size: 2rem;
   margin-bottom: 1rem;
+  color: #ffc107;
 }
 
 .bg-right p {
   font-weight: 300;
-  font-size: 1.4rem;
-  max-width: 500px;
-  line-height: 1.6;
+  font-size: 1.0rem;
+  max-width: 600px;
+  /* line-height: 1.2; */
 }
 
 /* Dark mode overrides */
@@ -302,6 +309,7 @@ body.dark .bg-right p {
 .edu-left {
   background: #f0f0f0; /* Light mode accent */
   transition: background 0.3s ease;
+  color: #ffc107;
 }
 
 .edu-right {
@@ -704,3 +712,56 @@ body.dark .github-btn {
   background: #24292e;
 }
 
+#page-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #f9f9f9;
+    color: #444;
+    text-align: center;
+    padding: 0.8rem 0;
+    font-size: 0.95rem;
+    border-top: 1px solid #ddd;
+    z-index: 900;
+}
+
+body.dark #page-footer {
+    background: #1b1b1b;
+    color: #ddd;
+    border-top: 1px solid #333;
+}
+
+/* Floating scroll buttons */
+.scroll-btn {
+    position: fixed;
+    bottom: 4.5rem; /* keeps them above footer */
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #ffcc00;
+    color: #000;
+    text-align: center;
+    line-height: 45px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    transition: background 0.3s ease, transform 0.2s ease;
+    z-index: 950;
+}
+.scroll-btn:hover {
+    background: #ffdb4d;
+    transform: translateY(-2px);
+}
+.scroll-up { left: 1rem; }
+.scroll-down { right: 1rem; }
+
+body.dark .scroll-btn {
+    background: #ffcc00;
+    color: #000;
+    box-shadow: 0 3px 8px rgba(255,255,255,0.15);
+}
+body.dark .scroll-btn:hover {
+    background: #ffdb4d;
+}
