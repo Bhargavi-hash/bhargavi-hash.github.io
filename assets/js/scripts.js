@@ -6,11 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'dark' || !savedTheme) {
     body.classList.add('dark');
-    toggleButton.textContent = '🌙';
+    toggleButton.textContent = '☀️';
     localStorage.setItem('theme', 'dark'); // ensure persistence
   } else {
     body.classList.remove('dark');
-    toggleButton.textContent = '☀️';
+    toggleButton.textContent = '🌙';
   }
 
   // 2. Toggle theme on button click
@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     body.classList.toggle('dark');
 
     if (body.classList.contains('dark')) {
-      toggleButton.textContent = '🌙';
+      toggleButton.textContent = '☀️';
       localStorage.setItem('theme', 'dark');
     } else {
-      toggleButton.textContent = '☀️';
+      toggleButton.textContent = '🌙';
       localStorage.setItem('theme', 'light');
     }
   });
