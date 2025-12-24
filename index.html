@@ -29,7 +29,7 @@
             const [activeSection, setActiveSection] = useState('home');
 
             // Portfolio data with useStorage
-            const [portfolioData, setPortfolioData] = useStorage('portfolio', {
+            const portfolioData = {
                 name: 'Bhargavi Kurukunda',
                 tagline: 'Building intelligent systems & exploring the boundaries of computation',
                 pronouns: 'she/her',
@@ -106,7 +106,7 @@
                     'Maintain 3 open source projects with 15K+ stars combined',
                     'Loves trying and experimenting different cooking recipes'
                 ]
-            });
+            };
 
             const [editData, setEditData] = useState(portfolioData);
             const [hoveredProject, setHoveredProject] = useState(null);
@@ -189,34 +189,6 @@
                             </div>
                         </div>
                     </nav>
-
-                    {/* Edit Button */}
-                    <div className="fixed bottom-8 right-8 z-50">
-                        {!isEditing ? (
-                            <button onClick={() => setIsEditing(true)}
-                                className="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all shadow-lg
-      hover:shadow-xl"
-                                style={{ fontWeight: '500' }}
-                            >
-                                {'\u270F\uFE0F'} Edit
-                            </button>
-                        ) : (
-                            <div className="flex gap-3">
-                                <button onClick={handleCancel}
-                                    className="px-6 py-3 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors" style={{
-                                        fontWeight: '500'
-                                    }}>
-                                    Cancel
-                                </button>
-                                <button onClick={handleSave}
-                                    className="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all shadow-lg" style={{
-                                        fontWeight: '500'
-                                    }}>
-                                    {'\u2713'} Save
-                                </button>
-                            </div>
-                        )}
-                    </div>
 
                     {/* Main Content */}
                     <div className="max-w-5xl mx-auto px-8">
