@@ -1,478 +1,636 @@
-<!DOCTYPE html>
-<html lang="en">
+import React, { useState, useEffect } from 'react';
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bhargavi | Portfolio</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+function Portfolio() {
+  const [tailwindLoaded, setTailwindLoaded] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  
+  // Portfolio data with useStorage
+  const [portfolioData, setPortfolioData] = useStorage('portfolio', {
+    name: 'Bhargavi Kurukunda',
+    tagline: 'Building intelligent systems & exploring the boundaries of computation',
+    pronouns: 'she/her',
+    location: 'Santa Barbara, CA, USA',
+    email: 'bhargavi_kurukunda@ucsb.edu',
+    github: 'github.com/Bhargavi-hash',
+    linkedin: 'linkedin.com/in/kbhargavi09',
+    website: 'https://github.com/Bhargavi-hash',
+    bio: 'I\'m a Master\'s student in Computer Science at University of California, Santa Barbara (UCSB) with a passion for making AI more accessible and interpretable along with a keen interest in designing user-facing products with users are the first priority. When I\'m not debugging neural networks, you\'ll find me contributing to open source, painting, hiking or attempting to perfect my pour-over coffee technique.',
+    currentlyLearning: ['WebGPU', 'System Design'],
+    interests: ['AI Ethics', 'Distributed Systems', 'Dev Tools'],
+    favoriteTools: [
+      { name: 'VS Code', emoji: '⚡', reason: 'Extensions for everything' },
+      { name: 'PyTorch', emoji: '🔥', reason: 'Research-friendly ML framework' },
+      { name: 'Docker', emoji: '🐳', reason: 'Reproducible environments' },
+      { name: 'Notion', emoji: '📝', reason: 'Second brain' }
+    ],
+    projects: [
+      {
+        title: 'Story Crafter',
+        tagline: 'Long form document Authoring Desktop Application',
+        description: 'A vercel deployed application for focused long-form writing, implementing performant document rendering and state management using React, TailwindCSS and TypeScript to support continuous editing without UI lag. Designed end-to-end data persistence and recovery workflows, integrating frontend state with backend services to ensure reliable autosave, crash recovery, and version-safe document storage.',
+        impact: '523 users, 124 Github Stars',
+        technologies: ['TypeScript', 'React', 'Zustand', 'TailwindCSS'],
+        link: 'https://story-crafter-pink.vercel.app/',
+        color: '#6366f1'
+      },
+      {
+        title: 'StoryLoom',
+        tagline: 'Cloud based End-to-End Digital publishing platform',
+        description: 'Built a scalable MERN-based content authoring and publishing platform deployed on AWS (EC2/S3) using Docker. Optimized performance with caching and database indexing to support high-traffic workloads.',
+        impact: '500+ beta users',
+        technologies: ['React', 'Node.js', 'Redis'],
+        link: 'https://story-looms.vercel.app/',
+        color: '#8b5cf6'
+      },
+      {
+        title: 'DrawPool',
+        tagline: 'Distributed Collaborative Multi-User Drawing Tool',
+        description: 'Engineered a real-time collaborative drawing platform using WebSockets for low-latency event propagation, React.js for modular UI, and Node.js + Redis for distributed state synchronization. Integrated Fabric.js for canvas rendering and y-webrtc for peer-to-peer session resilience; deployed via AWS S3 and tunneled development with ngrok. Applied MFC for client integration and Kubernetes for container orchestration to ensure horizontal scalability.',
+        impact: '32 Github forks',
+        technologies: ['Python', 'React', 'WebRTC', 'CRDTs', 'Fabric.js', 'Websockets'],
+        link: 'https://github.com/Bhargavi-hash/DrawPool',
+        color: '#10b981'
+      }
+    ],
+    research: {
+      current: 'Efficient Transformers for Edge Devices',
+      description: 'Exploring model compression techniques to run large language models on mobile devices without sacrificing performance.',
+      advisor: 'Prof. Sarah Johnson',
+      publications: [
+        'Chen, A. et al. "Attention Pruning in Neural Networks" - ICML 2024 (Under Review)',
+        'Chen, A. & Smith, J. "Federated Learning for Privacy-Preserving AI" - NeurIPS Workshop 2023'
+      ]
+    },
+    education: {
+      masters: {
+        degree: 'M.S. in Computer Science',
+        school: 'University of California, Santa Barbara',
+        period: '2024 - 2026 (Expected)',
+        focus: 'Distributed Systems, Scalable Internet Services and HCI',
+        gpa: '3.92/4.0'
+      },
+      bachelors: {
+        degree: 'B.Tech. in Computer Science and Engineering',
+        school: 'International Institute of Information Technology, Hyderabad',
+        period: '2020 - 2024',
+        focus: 'Operating Systems, Micro services',
+        gpa: '3.6/4.0'
+      }
+    },
+    funFacts: [
+      'Speak 3 languages fluently (English, Hindi, Telugu)',
+      'Maintain 3 open source projects with 15K+ stars combined',
+      'Loves trying and experimenting different cooking recipes'
+    ]
+  });
 
-  <!-- Montserrat Thin (300), Regular (400), SemiBold (600) -->
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"> -->
-</head>
+  const [editData, setEditData] = useState(portfolioData);
+  const [hoveredProject, setHoveredProject] = useState(null);
 
-<body class="dark">
+  useEffect(() => {
+    if (!document.getElementById('tailwind-script')) {
+      const tailwindScript = document.createElement('script');
+      tailwindScript.id = 'tailwind-script';
+      tailwindScript.src = 'https://cdn.tailwindcss.com';
+      tailwindScript.onload = () => {
+        setTimeout(() => setTailwindLoaded(true), 100);
+      };
+      document.head.appendChild(tailwindScript);
+    } else {
+      setTailwindLoaded(true);
+    }
+  }, []);
 
-  <!-- Invisible Navbar -->
-  <nav id="navbar">
-    <div class="nav-content">
-      <div class="nav-links">
-        <a href="#featured-projects">Projects</a>
-        <a href="#education">Education</a>
-        <a href="#experience">Work Experience</a>
-        <a href="#skills">Skills</a>
-      </div>
-      <button id="mode-toggle">🌙</button>
-    </div>
-  </nav>
+  useEffect(() => {
+    document.body.style.background = '#ffffff';
+    document.documentElement.style.minHeight = '100%';
+    return () => { 
+      document.body.style.background = ''; 
+      document.documentElement.style.minHeight = ''; 
+    };
+  }, []);
 
-  <!-- Hero Section -->
-  <section id="hero">
-    <h1>Hello! 👋</h1>
-    <br>
-    <p class="intro">
-      I'm Bhargavi Kurukunda, a Computer Science Master's student at University of California, Santa Barbara (UCSB).</p>
-    <br>
-    <br>
-    You can reach me at 📬
-    <a href="mailto:bhargavi_kurukunda@ucsb.edu">bhargavi_kurukunda@ucsb.edu</a>
-    <div class="social-buttons">
-      <a href="https://www.linkedin.com/in/kbhargavi09/" target="_blank" class="social-btn linkedin-btn"
-        aria-label="LinkedIn">
-        <!-- LinkedIn SVG Icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.762 
-        2.239 5 5 5h14c2.762 0 5-2.238 
-        5-5v-14c0-2.761-2.238-5-5-5zm-11 
-        19h-3v-10h3v10zm-1.5-11.268c-.966 
-        0-1.75-.79-1.75-1.764s.784-1.764 
-        1.75-1.764 1.75.79 1.75 
-        1.764-.784 1.764-1.75 
-        1.764zm13.5 11.268h-3v-5.604c0-1.337-.026-3.063-1.865-3.063-1.867 
-        0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.885v1.367h.041c.403-.764 
-        1.387-1.566 2.856-1.566 3.053 0 3.618 2.008 3.618 
-        4.619v5.58z" />
-        </svg>
-      </a>
-      <a href="https://github.com/Bhargavi-hash" target="_blank" class="social-btn github-btn" aria-label="GitHub">
-        <!-- GitHub SVG Icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 .297c-6.63 0-12 5.373-12 
-        12 0 5.303 3.438 9.8 8.205 
-        11.385.6.113.82-.258.82-.577 
-        0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.089-.745.083-.729.083-.729 
-        1.205.084 1.84 1.237 1.84 
-        1.237 1.07 1.835 2.809 1.304 3.495.997.108-.776.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.931 
-        0-1.311.469-2.381 1.236-3.221-.124-.303-.536-1.524.117-3.176 
-        0 0 1.008-.322 3.301 1.23a11.48 
-        11.48 0 0 1 3.003-.404c1.018.005 2.044.138 
-        3.003.404 2.291-1.552 3.298-1.23 
-        3.298-1.23.653 1.652.242 2.873.118 
-        3.176.77.84 1.235 1.91 1.235 
-        3.221 0 4.609-2.803 5.624-5.475 
-        5.921.43.372.823 1.102.823 2.222 
-        0 1.604-.015 2.896-.015 3.293 
-        0 .319.218.694.825.576C20.565 
-        22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12z" />
-        </svg>
-      </a>
-    </div>
+  const handleSave = () => {
+    setPortfolioData(editData);
+    setIsEditing(false);
+  };
 
-  </section>
+  const handleCancel = () => {
+    setEditData(portfolioData);
+    setIsEditing(false);
+  };
 
-  <!-- Background Section -->
-  <section id="background">
-    <div class="bg-left">
-      <h2>Background</h2>
-    </div>
-    <div class="bg-right">
-      <p style="margin-bottom: 1.5rem; line-height: 1.6;">
-        I'm pursuing a Master's in Computer Science at UCSB, focusing on scalable web systems, machine learning, and
-        distributed intelligent agents. In Summer 2025, I worked as a Data Analyst at Daily Nexus, building automated
-        analytics pipelines and cloud dashboards that reached 28,000+ users and boosted engagement by 36%.
-      </p>
-      <p style="margin-bottom: 1.5rem; line-height: 1.6;">
-        Previously, as an R&D Intern at Virtual Labs, I developed Linux OS simulations with WebAssembly and integrated
-        an AI chatbot that guided 200+ students, helping the platform scale to 11M users. At Pentaprism, I optimized
-        MERN-stack apps with JWT authentication and CI/CD pipelines using Docker and Kubernetes, cutting deployment time
-        by 40%.
-      </p>
-      <p style="margin-bottom: 1.5rem; line-height: 1.6;">
-        I earned my Bachelor's in Computer Science from IIIT, presented at the ACM CompEd Global Conference (2023),
-        ranked in the top 10% of Kaggle ML competitions, and mentored students in ML and generative AI through
-        MasterScholar’s 2025 program.
-      </p>
-      <p style="margin-bottom: 1.5rem; line-height: 1.6;">
-        I thrive at the intersection of machine learning and large-scale systems—building software that’s intelligent,
-        secure, and production-grade. Outside work, you’ll find me painting for my art channel SoulfulStrokes, hiking
-        California trails, or diving into spiritual books.
-      </p>
-    </div>
-  </section>
+  const scrollToSection = (sectionId) => {
+    setActiveSection(sectionId);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
-  <!-- Education Section -->
-  <section id="education">
-    <div class="edu-left">
-      <h2>Education</h2>
-    </div>
-    <div class="edu-right">
-      <div class="edu-item">
-        <h3>Master of Science in Computer Science</h3>
-        <p><b>University of California, Santa Barbara (UCSB)</b></p>
-        <p>2024 – Present (Expected Graduation: June 2026)</p>
-        <p>CGPA: 3.90/4.0</p>
-      </div>
-      <div class="edu-item">
-        <h3>Bachelor of Technology in Computer Science and Engineering</h3>
-        <p><b>International Institute of Information Technology, Hyderabad (IIITH)</b></p>
-        <p>2020 – 2024</p>
-        <p>CGPA: 3.40/4.0</p>
-      </div>
-    </div>
-  </section>
+  if (!tailwindLoaded) {
+    return <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>;
+  }
 
-  <!-- Work Experience Section -->
-  <section id="experience">
-    <h2>Work Experience</h2>
-    <div class="experience-list">
-      <div class="exp-item">
-        <span class="exp-role">Data Analyst - Editorial</span>
-        <span class="exp-duration">Mar 2025 – Jun 2025</span>
-        <h3>Daily Nexus - Santa Barbara, CA, USA</h3>
-        <p><span class="number-box">1</span>Built Python and Tableau dashboards visualizing complex datasets, reaching
-          28K+ students and boosting article engagement by 36%.</p>
-        <p><span class="number-box">2</span>Automated ETL pipelines using SQL and Python (pandas, Airflow), reducing
-          reporting time by 53% and enabling near real-time updates.</p>
-        <p><span class="number-box">3</span>Integrated visual analytics into articles, improving readability by 25%
-          based on user metrics.</p>
-        <p><span class="number-box">4</span>Applied A/B testing and statistical analysis to validate dashboard insights,
-          driving data-backed editorial decisions.</p>
-        <p><span class="number-box">5</span>Deployed dashboards via cloud services (Heroku) for scalable, secure access
-          by editorial teams.</p>
-      </div>
-      <div class="exp-item">
-        <span class="exp-role">Research and Development Intern</span>
-        <span class="exp-duration">July 2023 – May 2024</span>
-        <h3>Virtual Labs, Inc. - Hyderabad, India</h3>
-        <p><span class="number-box">1</span>Developed Linux OS simulations (scheduling, context switching, memory, mutex
-          locks, file systems) using
-          JavaScript, WebAssembly, and Node.js achieving sub-100 ms latency.</p>
-        <p><span class="number-box">2</span>Profiled and benchmarked against Linux kernel, improving simulation accuracy
-          by 35%.</p>
-        <p><span class="number-box">3</span>Integrated an AI-powered chatbot using OpenAI API and LangChain to deliver
-          instant explanations and
-          interactive guidance for students.</p>
-        <p><span class="number-box">4</span>Tested with 200+ users to refine and scale simulations; platform now scaled
-          to 11M+ nationwide.</p>
-        <p><span class="number-box">5</span>Presented at 2nd ACM CompEd Global conference 2023, representing the
-          platform to 50+ leading researchers
-          from reputed universities and global companies.</p>
-      </div>
-      <div class="exp-item">
-        <span class="exp-role">Web Development Intern</span>
-        <span class="exp-duration">Aug 2022 – Mar 2023</span>
-        <h3>Pentaprism - Hyderabad, India</h3>
-        <p><span class="number-box">1</span>Collaborated with cross-functional teams to develop responsive UIs using
-          MERN stack.</p>
-        <p><span class="number-box">2</span>Implemented RESTful APIs with Express.js and MongoDB for seamless data flow
-          between frontend and backend.</p>
-        <p><span class="number-box">3</span>Optimized JavaScript bundles via code-splitting, lazy loading, and
-          tree-shaking, reducing page load time by 20%
-          and improving Lighthouse performance scores.</p>
-        <p><span class="number-box">4</span>Integrated JWT-based authentication and role-based access control to enhance
-          application security.</p>
-        <p><span class="number-box">5</span>Automated build, testing, and deployment workflows using GitHub Actions,
-          Docker, and Kubernetes for CI/CD
-          pipelines.</p>
-        <p><span class="number-box">6</span>Ensured maintainable, high-quality code with Jest, ESLint, and Prettier for
-          automated testing and static analysis.</p>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- Featured Projects -->
-  <section id="featured-projects">
-    <h2>Featured Projects</h2>
-    <div class="section-content">
-      <div class="project-grid">
-        <div class="project-card">
-          <img src="assets/images/DrawPool.png" alt="Project One Screenshot">
-          <h3>Synchronized Multi-user drawing tool</h3>
-          <div class="tools-used">
-            <span>MFC</span>
-            <span>ngrok</span>
-            <span>Kubernetes</span>
-            <span>AWS S3</span>
-            <span>Redis</span>
-            <span>Fabric.js</span>
-            <span>y-webrtc</span>
+  return (
+    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif' }}>
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 bg-white bg-opacity-95 backdrop-blur-sm z-40" style={{ 
+        borderBottom: '1px solid #f5f5f5',
+        boxShadow: '0 2px 20px rgba(0, 0, 0, 0.02)'
+      }}>
+        <div className="max-w-5xl mx-auto px-8 py-6 flex items-center justify-between">
+          <button 
+            onClick={() => scrollToSection('home')}
+            className="text-xl font-light hover:text-blue-600 transition-colors"
+            style={{ fontWeight: '300', letterSpacing: '-0.02em' }}
+          >
+            {portfolioData.name}
+          </button>
+          <div className="flex gap-8 text-sm">
+            <button onClick={() => scrollToSection('projects')} className="text-gray-700 hover:text-blue-600 transition-colors" style={{ fontWeight: '400' }}>
+              Projects
+            </button>
+            <button onClick={() => scrollToSection('research')} className="text-gray-700 hover:text-blue-600 transition-colors" style={{ fontWeight: '400' }}>
+              Research
+            </button>
+            <button onClick={() => scrollToSection('about')} className="text-gray-700 hover:text-blue-600 transition-colors" style={{ fontWeight: '400' }}>
+              About
+            </button>
+            <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-blue-600 transition-colors" style={{ fontWeight: '400' }}>
+              Contact
+            </button>
           </div>
-          <ul class="project-description">
-            Built a real-time collaborative drawing platform that reduced event latency by over 70% using WebSockets and
-            optimized UI rendering with React.js. Designed a fault-tolerant distributed state system with Node.js and
-            Redis, supporting 500+ concurrent users without performance degradation. Integrated Fabric.js for smooth
-            canvas interactions and y-webrtc for resilient peer-to-peer sessions, then deployed via AWS S3 with ngrok
-            tunneling for rapid iteration. Leveraged MFC for client integration and orchestrated containers with
-            Kubernetes, achieving seamless horizontal scaling and near-zero downtime under load.
-          </ul>
+        </div>
+      </nav>
 
-          <a href="https://github.com/Bhargavi-hash/DrawPool">View</a>
-        </div>
-        <div class="project-card">
-          <img src="assets/images/Storyloom-with-slogan.png" alt="Project Two Screenshot">
-          <h3>Cloud based End-to-End Digital publishing platform</h3>
-          <div class="tools-used">
-            <span>Ruby on Rails</span>
-            <span>AWS EC2</span>
-            <span>AWS S3</span>
-            <span>Docker</span>
-            <span>PostgreSQL</span>
+      {/* Edit Button */}
+      <div className="fixed bottom-8 right-8 z-50">
+        {!isEditing ? (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl"
+            style={{ fontWeight: '500' }}
+          >
+            {'\u270F\uFE0F'} Edit
+          </button>
+        ) : (
+          <div className="flex gap-3">
+            <button
+              onClick={handleCancel}
+              className="px-6 py-3 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+              style={{ fontWeight: '500' }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all shadow-lg"
+              style={{ fontWeight: '500' }}
+            >
+              {'\u2713'} Save
+            </button>
           </div>
-          <ul class="project-description">
-            Developed a scalable content authoring and publishing platform using Ruby on Rails, deployed with Docker and
-            hosted on AWS EC2/S3, enabling seamless media storage and rapid deployments. Implemented secure
-            authentication and role-based access control to support 100+ concurrent editors with real-time updates.
-            Optimized performance through intelligent caching and database indexing, reducing page load times by 40%
-            while handling high-traffic workloads reliably.
-          </ul>
-          <b><a href="https://github.com/Bhargavi-hash/StoryLoom">View</a></b>
-        </div>
+        )}
+      </div>
 
-        <div class="project-card">
-          <img src="assets/images/githubMAS.png" alt="Multi-agent systems for Github">
-          <h3>Github automation via multi-agent planning</h3>
-          <div class="tools-used">
-            <span>OpenAI</span>
-            <span>Python</span>
-            <span>GitHub API</span>
-            <span>Github CLI</span>
+      {/* Main Content */}
+      <div className="max-w-5xl mx-auto px-8">
+        
+        {/* Hero Section */}
+        <section id="home" className="pt-32 pb-24">
+          <div className="max-w-3xl">
+            <h1 className="text-6xl font-light mb-6" style={{ 
+              fontWeight: '300', 
+              letterSpacing: '-0.03em',
+              lineHeight: '1.1'
+            }}>
+              {portfolioData.name}
+            </h1>
+            <p className="text-2xl text-gray-600 mb-8 leading-relaxed" style={{ fontWeight: '400' }}>
+              {portfolioData.tagline}
+            </p>
+            <div className="flex gap-6 text-sm text-gray-500 mb-12">
+              <span>{'\u{1F4CD}'} {portfolioData.location}</span>
+              <span>•</span>
+              <span>{portfolioData.pronouns}</span>
+            </div>
+            <div className="flex gap-4">
+              <a 
+                href={`mailto:${portfolioData.email}`}
+                className="px-8 py-4 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl"
+                style={{ fontWeight: '500' }}
+              >
+                Get in touch
+              </a>
+              <a 
+                href={`https://${portfolioData.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-white text-gray-700 rounded-full hover:bg-gray-50 transition-colors"
+                style={{ 
+                  fontWeight: '500',
+                  border: '1px solid #f0f0f0',
+                  boxShadow: '0 2px 15px rgba(0, 0, 0, 0.04)'
+                }}
+              >
+                View GitHub {'\u2192'}
+              </a>
+            </div>
           </div>
-          <ul class="project-description">
-            Designed an intelligent agent that turns user prompts into actionable GitHub API calls—capable of creating, renaming, and deleting repositories, and managing README files with minimal human input.
-            <b><a href="https://github.com/Bhargavi-hash/Multi-Agentic-Planners/tree/main/github_agent">View</a></b>
-        </div>
+        </section>
 
-        <div class="project-card">
-          <img src="assets/images/githubMAS.png" alt="NarrateX">
-          <h3>NarrateX - A LLM powered storytelling platform</h3>
-          <div class="tools-used">
-            <span>LLM</span>
-            <span>OpenAI</span>
-            <span>spaCy</span>
-            <span>Natural Language Toolkit (NLTK)</span>
+        {/* Currently Learning Banner */}
+        <section className="py-12 mb-24">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-12" style={{
+            border: '1px solid #f0f0f0'
+          }}>
+            <h3 className="text-sm uppercase tracking-wide text-gray-500 mb-4" style={{ fontWeight: '500' }}>
+              Currently Learning
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {portfolioData.currentlyLearning.map((item, index) => (
+                <span
+                  key={index}
+                  className="px-5 py-2 bg-white rounded-full text-sm text-gray-700"
+                  style={{ 
+                    fontWeight: '400',
+                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)'
+                  }}
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
-          <ul class="project-description">
-            NarrateX is an interactive story analysis tool that uses NLP to extract characters, infer genders, detect narrative point of view, and generate an interactive character network graph. Built with FastAPI (backend) and a lightweight JavaScript/vis.js frontend, it allows users to paste or select a sample story and instantly explore character dynamics and narrative structure in a visual, engaging way.
-            <b><a href="https://github.com/Bhargavi-hash/NarrateX">View</a></b>
-        </div>
+        </section>
 
-        <div class="project-card">
-          <img src="assets/images/compiler.png" alt="Project Three Screenshot">
-          <h3>Compiler design and development using Racket</h3>
-          <div class="tools-used">
-            <span>DrRacket</span>
-            <span>Github</span>
-            <span>Racket</span>
+        {/* Featured Projects */}
+        <section id="projects" className="mb-32">
+          <h2 className="text-4xl font-light mb-4" style={{ fontWeight: '300', letterSpacing: '-0.02em' }}>
+            Featured Work
+          </h2>
+          <p className="text-gray-600 mb-16 text-lg" style={{ fontWeight: '400' }}>
+            Projects I'm proud of — from research to production
+          </p>
+          
+          <div className="space-y-8">
+            {portfolioData.projects.map((project, index) => (
+              <div 
+                key={index} 
+                className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-300"
+                style={{ 
+                  boxShadow: hoveredProject === index 
+                    ? '0 20px 60px rgba(0, 0, 0, 0.12)' 
+                    : '0 8px 40px rgba(0, 0, 0, 0.06)',
+                  border: '1px solid #f5f5f5',
+                  transform: hoveredProject === index ? 'translateY(-4px)' : 'translateY(0)'
+                }}
+                onMouseEnter={() => setHoveredProject(index)}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                {/* Color accent bar */}
+                <div style={{ 
+                  height: '6px',
+                  background: project.color,
+                  opacity: hoveredProject === index ? 1 : 0.7,
+                  transition: 'opacity 0.3s'
+                }} />
+                
+                <div className="p-10">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-medium mb-2" style={{ fontWeight: '500' }}>
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-500 text-sm mb-4" style={{ fontWeight: '400' }}>
+                        {project.tagline}
+                      </p>
+                    </div>
+                    {project.link && (
+                      <a 
+                        href={`https://${project.link}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-full transition-colors text-sm"
+                        style={{ fontWeight: '500' }}
+                      >
+                        Visit {'\u2197'}
+                      </a>
+                    )}
+                  </div>
+                  
+                  <p className="text-gray-700 mb-6 leading-relaxed" style={{ 
+                    fontWeight: '400', 
+                    fontSize: '1.05rem',
+                    lineHeight: '1.7'
+                  }}>
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-xs"
+                          style={{ fontWeight: '400' }}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="text-sm font-medium px-4 py-2 rounded-full" style={{ 
+                      backgroundColor: `${project.color}15`,
+                      color: project.color,
+                      fontWeight: '500'
+                    }}>
+                      {project.impact}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <ul class="project-description">
-            Implemented a modular compiler with lexical analysis, parsing, semantic checks, and code generation,
-            leveraging Racket macros and parser combinators for clean syntax handling. Designed an intermediate
-            representation to enable optimization passes and validated correctness with extensive unit tests and
-            benchmark programs. Profiled and optimized runtime performance, reducing compilation latency by 30%.
-            <b><a href="#">View</a></b>
-        </div>
-        <div class="project-card">
-          <img src="assets/images/custom_os.png" alt="Project Three Screenshot">
-          <h3>Custom Operating System</h3>
-          <div class="tools-used">
-            <span>C</span>
-            <span>GCC</span>
-            <span>GDB</span>
+        </section>
+
+        {/* Research Section */}
+        <section id="research" className="mb-32 bg-gradient-to-br from-gray-50 to-blue-50 -mx-8 px-8 py-20 rounded-3xl" style={{
+          border: '1px solid #f0f0f0'
+        }}>
+          <div className="max-w-3xl">
+            <h2 className="text-4xl font-light mb-4" style={{ fontWeight: '300', letterSpacing: '-0.02em' }}>
+              Research
+            </h2>
+            <p className="text-gray-600 mb-12 text-lg" style={{ fontWeight: '400' }}>
+              {portfolioData.research.current}
+            </p>
+            
+            <div className="bg-white p-10 rounded-2xl mb-8" style={{ 
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.06)',
+              border: '1px solid #f5f5f5'
+            }}>
+              <p className="text-gray-700 mb-6 leading-relaxed" style={{ 
+                fontWeight: '400',
+                fontSize: '1.05rem',
+                lineHeight: '1.7'
+              }}>
+                {portfolioData.research.description}
+              </p>
+              <div className="text-sm text-gray-500 mb-8">
+                <span style={{ fontWeight: '500' }}>Advisor:</span> {portfolioData.research.advisor}
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="text-sm uppercase tracking-wide text-gray-500 mb-4" style={{ fontWeight: '500' }}>
+                  Publications
+                </h4>
+                {portfolioData.research.publications.map((pub, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <span className="text-blue-600 mt-1">{'\u{1F4C4}'}</span>
+                    <p className="text-gray-700 text-sm leading-relaxed" style={{ fontWeight: '400' }}>
+                      {pub}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <ul class="project-description">
-            Designed and implemented a UNIX-style operating system kernel with process scheduling, file systems, memory
-            management, mutex locks, and inter-process communication (IPC). Built a text editor and calculator as
-            user-space applications to validate system APIs. Leveraged C, GCC, and GDB for kernel development and
-            debugging, systematically profiling performance to ensure stability under concurrent workloads.
-            <b><a href="https://github.com/Bhargavi-hash/Linux-Shell-Implementation">View</a></b>
-        </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" className="mb-32">
+          <h2 className="text-4xl font-light mb-4" style={{ fontWeight: '300', letterSpacing: '-0.02em' }}>
+            About Me
+          </h2>
+          <p className="text-gray-600 mb-16 text-lg" style={{ fontWeight: '400' }}>
+            The human behind the code
+          </p>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            {/* Bio */}
+            <div className="bg-white p-10 rounded-2xl" style={{ 
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.06)',
+              border: '1px solid #f5f5f5'
+            }}>
+              <h3 className="text-xl font-medium mb-6" style={{ fontWeight: '500' }}>
+                {'\u{1F44B}'} Hi there!
+              </h3>
+              <p className="text-gray-700 leading-relaxed" style={{ 
+                fontWeight: '400',
+                fontSize: '1.05rem',
+                lineHeight: '1.8'
+              }}>
+                {portfolioData.bio}
+              </p>
+            </div>
+
+            {/* Interests */}
+            <div className="bg-white p-10 rounded-2xl" style={{ 
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.06)',
+              border: '1px solid #f5f5f5'
+            }}>
+              <h3 className="text-xl font-medium mb-6" style={{ fontWeight: '500' }}>
+                {'\u{1F4A1}'} Interests
+              </h3>
+              <div className="space-y-3">
+                {portfolioData.interests.map((interest, index) => (
+                  <div key={index} className="flex items-center gap-3">
+                    <div style={{ 
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: '50%',
+                      backgroundColor: '#6366f1'
+                    }} />
+                    <span className="text-gray-700" style={{ fontWeight: '400' }}>
+                      {interest}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Favorite Tools */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-medium mb-8" style={{ fontWeight: '500' }}>
+              {'\u{1F6E0}\uFE0F'} Favorite Tools
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {portfolioData.favoriteTools.map((tool, index) => (
+                <div 
+                  key={index}
+                  className="bg-white p-8 rounded-2xl text-center hover:shadow-xl transition-shadow"
+                  style={{ 
+                    boxShadow: '0 8px 40px rgba(0, 0, 0, 0.06)',
+                    border: '1px solid #f5f5f5'
+                  }}
+                >
+                  <div className="text-4xl mb-4">{tool.emoji}</div>
+                  <h4 className="font-medium mb-2" style={{ fontWeight: '500' }}>
+                    {tool.name}
+                  </h4>
+                  <p className="text-sm text-gray-600" style={{ fontWeight: '400' }}>
+                    {tool.reason}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Fun Facts */}
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-12 rounded-3xl" style={{
+            border: '1px solid #f0f0f0'
+          }}>
+            <h3 className="text-2xl font-medium mb-8" style={{ fontWeight: '500' }}>
+              {'\u{1F389}'} Fun Facts
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {portfolioData.funFacts.map((fact, index) => (
+                <div key={index} className="flex items-start gap-3 bg-white p-6 rounded-xl" style={{
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)'
+                }}>
+                  <span className="text-purple-600 font-bold" style={{ fontWeight: '600' }}>
+                    {index + 1}.
+                  </span>
+                  <p className="text-gray-700 flex-1" style={{ fontWeight: '400' }}>
+                    {fact}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Education */}
+        <section className="mb-32">
+          <h2 className="text-4xl font-light mb-16" style={{ fontWeight: '300', letterSpacing: '-0.02em' }}>
+            Education
+          </h2>
+          
+          <div className="space-y-6">
+            {/* Masters */}
+            <div className="bg-white p-10 rounded-2xl" style={{ 
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.06)',
+              border: '1px solid #f5f5f5'
+            }}>
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <h3 className="text-xl font-medium mb-1" style={{ fontWeight: '500' }}>
+                    {portfolioData.education.masters.degree}
+                  </h3>
+                  <p className="text-gray-600 mb-2" style={{ fontWeight: '400' }}>
+                    {portfolioData.education.masters.school}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Focus: {portfolioData.education.masters.focus}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-600 mb-1" style={{ fontWeight: '400' }}>
+                    {portfolioData.education.masters.period}
+                  </p>
+                  <p className="text-sm font-medium" style={{ 
+                    fontWeight: '500',
+                    color: '#6366f1'
+                  }}>
+                    GPA: {portfolioData.education.masters.gpa}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Bachelors */}
+            <div className="bg-white p-10 rounded-2xl" style={{ 
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.06)',
+              border: '1px solid #f5f5f5'
+            }}>
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <h3 className="text-xl font-medium mb-1" style={{ fontWeight: '500' }}>
+                    {portfolioData.education.bachelors.degree}
+                  </h3>
+                  <p className="text-gray-600 mb-2" style={{ fontWeight: '400' }}>
+                    {portfolioData.education.bachelors.school}
+                  </p>
+                  <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs" style={{ fontWeight: '500' }}>
+                    {portfolioData.education.bachelors.honors}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-600 mb-1" style={{ fontWeight: '400' }}>
+                    {portfolioData.education.bachelors.period}
+                  </p>
+                  <p className="text-sm font-medium" style={{ 
+                    fontWeight: '500',
+                    color: '#6366f1'
+                  }}>
+                    GPA: {portfolioData.education.bachelors.gpa}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="mb-32 text-center">
+          <h2 className="text-5xl font-light mb-6" style={{ fontWeight: '300', letterSpacing: '-0.02em' }}>
+            Let's work together
+          </h2>
+          <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto" style={{ fontWeight: '400', lineHeight: '1.7' }}>
+            I'm always interested in hearing about new projects, research collaborations, or just chatting about tech over coffee.
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-6 mb-12">
+            <a 
+              href={`mailto:${portfolioData.email}`}
+              className="px-10 py-5 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl text-lg"
+              style={{ fontWeight: '500' }}
+            >
+              {'\u{1F4E7}'} Email me
+            </a>
+            <a 
+              href={`https://${portfolioData.linkedin}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-10 py-5 bg-white text-gray-700 rounded-full hover:bg-gray-50 transition-colors text-lg"
+              style={{ 
+                fontWeight: '500',
+                border: '1px solid #f0f0f0',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
+              }}
+            >
+              {'\u{1F517}'} LinkedIn
+            </a>
+            <a 
+              href={`https://${portfolioData.github}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-10 py-5 bg-white text-gray-700 rounded-full hover:bg-gray-50 transition-colors text-lg"
+              style={{ 
+                fontWeight: '500',
+                border: '1px solid #f0f0f0',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
+              }}
+            >
+              {'\u{1F4BB}'} GitHub
+            </a>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="text-center text-gray-500 text-sm py-12 border-t" style={{ 
+          borderColor: '#f5f5f5',
+          fontWeight: '400'
+        }}>
+          <p className="mb-2">Designed & built with React and TailwindCSS</p>
+          <p>© 2025 {portfolioData.name}. All rights reserved.</p>
+        </footer>
       </div>
     </div>
-  </section>
+  );
+}
 
-  <!-- Technical Skills Section -->
-  <section id="skills">
-    <h2>Technical Skills</h2>
-    <div class="skills-grid">
-      <div class="skills-category">
-        <h3>Programming</h3>
-        <div class="skills-list">
-          <span class="skill-tag">C++</span>
-          <span class="skill-tag">C</span>
-          <span class="skill-tag">Python3</span>
-          <span class="skill-tag">Java</span>
-          <span class="skill-tag">MIPS</span>
-          <span class="skill-tag">Assembly</span>
-          <span class="skill-tag">Racket</span>
-        </div>
-      </div>
-      <div class="skills-category">
-        <h3>Software and Web dev</h3>
-        <div class="skills-list">
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">HTML</span>
-          <span class="skill-tag">CSS</span>
-          <span class="skill-tag">Javascript</span>
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">SQL</span>
-          <span class="skill-tag">XML</span>
-          <span class="skill-tag">AWS</span>
-          <span class="skill-tag">Rest APIs</span>
-          <span class="skill-tag">WebSockets</span>
-          <span class="skill-tag">Ruby on Rails</span>
-        </div>
-      </div>
-      <div class="skills-category">
-        <h3>Data Science Libs</h3>
-        <div class="skills-list">
-          <span class="skill-tag">Numpy</span>
-          <span class="skill-tag">Pandas</span>
-          <span class="skill-tag">Dask</span>
-          <span class="skill-tag">TensorFlow</span>
-          <span class="skill-tag">Keras</span>
-          <span class="skill-tag">Scikit-learn</span>
-          <span class="skill-tag">Matplotlib</span>
-          <span class="skill-tag">H2O.ai</span>
-          <span class="skill-tag">Bokeh</span>
-          <span class="skill-tag">Apache Kafka</span>
-          <span class="skill-tag">SpaCy</span>
-          <span class="skill-tag">Open CV</span>
-        </div>
-      </div>
-
-      <div class="skills-category">
-        <h3>Project and Workflow Management</h3>
-        <div class="skills-list">
-          <span class="skill-tag">Agile/Scrum(Jira,Trello)</span>
-          <span class="skill-tag">Documentation(Notion, Overleaf)</span>
-          <span class="skill-tag">Communication (Slack, Teams)</span>
-          <span class="skill-tag">CI/CD Tracking (Github Projects, ClickUp)</span>
-        </div>
-      </div>
-
-      <div class="skills-category">
-        <h3>Multi-agent systems</h3>
-        <div class="skills-list">
-          <span class="skill-tag">JADE</span>
-          <span class="skill-tag">Mesa</span>
-          <span class="skill-tag">Petting Zoo</span>
-          <span class="skill-tag">Open AI Gym</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Other Projects Section -->
-  <section id="other-projects">
-    <h2>Other Projects</h2>
-    <div class="other-projects-list">
-      <div class="other-project-item">
-        <h3>CoMeT: Towards Code Mixed Machine Translation Using Parallel Monolingual Sentences</h3>
-        <p>Generating a machine translation system for English to Hinglish in supervised learning. In
-          supervised learning, the algorithm “learns” from the training dataset by iteratively making
-          predictions on the data and adjusting for the correct answer. (Here we are making use of
-          supervised learning because we are using labelled data so that we can get the entire context
-          at the encoder.)
-
-          The translation systems could be used to augment datasets for various Hinglish tasks
-          by translating datasets from English to Hinglish</p>
-        <a href="https://github.com/Bhargavi-hash/Code-Mixed-Machine-Translation/tree/main">GitHub</a>
-      </div>
-
-      <div class="other-project-item">
-        <h3>Remote Pregnanacy Monitor</h3>
-        <p>A mobile application mainly used in retrieving the data stored in Zoho servers and displaying it in the
-          frontend and the necessary filtrations are done at the frontend based on user roles. The app is designed using
-          Flutter, Firebase and Dart, to retrieve and monitor the vitals of pregnant women and push necessary reminders
-          and appointment scheduling on time</p>
-        <a href="https://github.com/Bhargavi-hash/Remote-pregnancy-monitor">Github</a>
-      </div>
-
-      <div class="other-project-item">
-        <h3>InkOn</h3>
-        <p>A novel writing application using Java with Gradle.</p>
-        <a href="https://github.com/Bhargavi-hash/InkOn">GitHub</a>
-      </div>
-    </div>
-  </section>
-
-
-
-  <!-- Featured Posts -->
-  <!-- <section id="featured-posts">
-    <h2>Featured Posts</h2>
-    <div class="section-content">
-      <div class="project-grid">
-        <div class="project-card">
-          <img src="assets/images/post1.png" alt="Post One Thumbnail">
-          <h3>Post One</h3>
-          <p>Short description of the blog post.</p>
-          <a href="#">Read</a>
-        </div>
-        <div class="project-card">
-          <img src="assets/images/post2.png" alt="Post Two Thumbnail">
-          <h3>Post Two</h3>
-          <p>Another blog post description.</p>
-          <a href="#">Read</a>
-        </div>
-      </div>
-    </div>
-  </section> -->
-
-
-  <!-- Leadership & Achievements Section -->
-  <section id="leadership">
-    <h2>Leadership & Achievements</h2>
-    <div class="leadership-grid">
-      <div class="leadership-card">
-        <h3>MasterScholar Summer'25</h3>
-        <p>Instructed 40+ students on ML modeling, Neural Networks and GenAI development; designed hands-on projects,
-          and conducted presentation seminars.</p>
-      </div>
-
-      <div class="leadership-card">
-        <h3>Competitive ML - Kaggle</h3>
-        <p>Achieved top 10% rankings in structured prediction and ensemble modeling challenges.</p>
-      </div>
-
-      <div class="leadership-card">
-        <h3>Lead Teaching Assistant</h3>
-        <p>Led weekly labs, designed assignment projects and graded assignments for 200+ students in Systems and
-          Algorithms courses.</p>
-      </div>
-
-      <div class="leadership-card">
-        <h3>ICPC Regional Finalist 2021</h3>
-        <p>Regional Finalist from Hyderabad for the year 2021.</p>
-      </div>
-    </div>
-  </section>
-
-
-  <script src="assets/js/scripts.js"></script>
-
-  <!-- Footer always visible at bottom -->
-  <footer id="page-footer">
-    <span>Created by Bhargavi</span>
-  </footer>
-
-  <!-- Floating Up / Down Buttons -->
-  <a href="#hero" class="scroll-btn scroll-up" aria-label="Scroll Up">⬆</a>
-  <a href="#leadership" class="scroll-btn scroll-down" aria-label="Scroll Down">⬇</a>
-
-</body>
-
-</html>
+export default Portfolio;
