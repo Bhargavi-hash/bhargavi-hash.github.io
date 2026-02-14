@@ -2221,7 +2221,7 @@ input, select, textarea {
 	#banner {
 		background: #CCE8F4 url("../../images/background.jpg");
 		background-position: center center;
-		background-size: auto 100%;
+		background-size: cover;
 		background-repeat: no-repeat;
 		text-align: center;
 		position: relative;
