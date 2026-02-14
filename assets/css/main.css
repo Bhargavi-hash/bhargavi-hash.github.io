@@ -37,6 +37,50 @@ ol, ul {
 	list-style: none;
 }
 
+/* Styling for Section-Level Skill Tags */
+.section-skills {
+    list-style: none;
+    padding: 0;
+    margin: -1.5em 0 3em 0; /* Pulls it closer to the heading and pushes cards down */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centers tags with the major header */
+    gap: 10px;
+}
+
+.section-skills li {
+    background: rgba(255, 255, 255, 0.1); /* Subtle transparent white */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* Pill shape */
+    padding: 5px 15px;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #666;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Styling for technical tags */
+.tech-tags {
+    list-style: none;
+    padding: 0;
+    margin: 1em 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tech-tags li {
+    background: lightsalmon;
+    border: 1px solid salmon;
+    border-radius: 10px;
+    padding: 4px 10px;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #252122;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 blockquote, q {
 	quotes: none;
 }
@@ -1571,12 +1615,14 @@ input, select, textarea {
 	.box {
 		background: #ffffff;
 		border-bottom: solid 1px #ccc;
+		border-radius: 10px;
 		padding: 2.75em 1.75em 2.75em 1.75em;
 	}
 
 		.box .image.featured {
 			position: relative;
 			width: auto;
+			/* height: 300px; */
 			left: 1.75em;
 			top: 1.75em;
 			margin: -4.5em 0 4.25em -3.5em;
