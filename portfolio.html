@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhargavi Kurukunda — Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0A0F1E;
+  --navy-2: #111827;
+  --navy-3: #1a2235;
+  --teal: #00D4B4;
+  --teal-dim: rgba(0,212,180,0.12);
+  --teal-border: rgba(0,212,180,0.25);
+  --cream: #F0EDE6;
+  --cream-dim: rgba(240,237,230,0.6);
+  --cream-muted: rgba(240,237,230,0.35);
+  --white: #ffffff;
+  --border: rgba(255,255,255,0.07);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 4rem;
+  background: rgba(10,15,30,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--cream);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.875rem;
+  color: var(--cream-dim);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--teal); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 4rem;
+  padding-top: 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,212,180,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+}
+
+.hero-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-name span { color: var(--teal); }
+
+.hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 300;
+  color: var(--cream-dim);
+  margin-bottom: 2rem;
+  letter-spacing: 0.01em;
+}
+
+.hero-bio {
+  max-width: 560px;
+  font-size: 1rem;
+  color: var(--cream-muted);
+  line-height: 1.75;
+  margin-bottom: 3rem;
+}
+
+/* ── IMPACT NUMBERS ── */
+.impact-row {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.impact-item {}
+
+.impact-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1;
+  display: block;
+}
+
+.impact-num .teal { color: var(--teal); }
+
+.impact-label {
+  font-size: 0.8rem;
+  color: var(--cream-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* ── CTA BUTTONS ── */
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--teal);
+  color: var(--navy);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 4px;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--cream);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.btn-secondary:hover { border-color: var(--teal-border); transform: translateY(-1px); }
+
+/* ── SECTIONS ── */
+section {
+  padding: 6rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.15;
+  margin-bottom: 3.5rem;
+  letter-spacing: -0.01em;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── EXPERIENCE ── */
+.exp-list { display: flex; flex-direction: column; gap: 0; }
+
+.exp-item {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 0 3rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.exp-item:first-child { border-top: 1px solid var(--border); }
+
+.exp-date {
+  font-size: 0.8rem;
+  color: var(--cream-muted);
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.04em;
+  padding-top: 0.2rem;
+}
+
+.exp-role {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 0.2rem;
+}
+
+.exp-company {
+  font-size: 0.875rem;
+  color: var(--teal);
+  margin-bottom: 0.875rem;
+  font-weight: 500;
+}
+
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.exp-bullets li {
+  font-size: 0.9rem;
+  color: var(--cream-dim);
+  padding-left: 1.1rem;
+  position: relative;
+  line-height: 1.6;
+}
+
+.exp-bullets li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+  font-size: 0.75rem;
+  top: 0.15rem;
+}
+
+/* ── PROJECTS ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--navy-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+  transition: border-color 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  border-color: var(--teal-border);
+  transform: translateY(-3px);
+}
+
+.project-card.featured {
+  grid-column: span 2;
+  background: var(--navy-3);
+  border-color: var(--teal-border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.project-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: var(--teal-dim);
+  border: 1px solid var(--teal-border);
+  padding: 0.25rem 0.625rem;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+}
+
+.project-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 0.625rem;
+  line-height: 1.3;
+}
+
+.project-desc {
+  font-size: 0.875rem;
+  color: var(--cream-dim);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+.project-metrics {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.metric-key {
+  font-size: 0.7rem;
+  color: var(--cream-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.project-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.stack-chip {
+  font-size: 0.72rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--cream-dim);
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+.project-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.link-btn {
+  font-size: 0.78rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  color: var(--cream-dim);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.875rem;
+  border-radius: 3px;
+  transition: border-color 0.2s, color 0.2s;
+  letter-spacing: 0.04em;
+}
+
+.link-btn:hover { border-color: var(--teal-border); color: var(--teal); }
+
+.link-btn.live {
+  background: var(--teal-dim);
+  border-color: var(--teal-border);
+  color: var(--teal);
+}
+
+/* ── SKILLS ── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.skill-group {
+  background: var(--navy-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.skill-group-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1rem;
+}
+
+.skill-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skill-list li {
+  font-size: 0.875rem;
+  color: var(--cream-dim);
+}
+
+/* ── CONTACT ── */
+.contact-section {
+  text-align: center;
+  padding: 6rem 4rem;
+  position: relative;
+}
+
+.contact-section::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,212,180,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.contact-section .section-title {
+  margin-bottom: 1rem;
+}
+
+.contact-sub {
+  font-size: 1rem;
+  color: var(--cream-muted);
+  max-width: 440px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.social-link {
+  font-size: 0.8rem;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.social-link:hover { color: var(--teal); border-color: var(--teal); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 2rem 4rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  color: var(--cream-muted);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* ── COUNTER ANIMATION ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow { animation: fadeUp 0.5s ease both; }
+.hero-name    { animation: fadeUp 0.5s 0.1s ease both; }
+.hero-title   { animation: fadeUp 0.5s 0.2s ease both; }
+.hero-bio     { animation: fadeUp 0.5s 0.3s ease both; }
+.impact-row   { animation: fadeUp 0.5s 0.4s ease both; }
+.hero-cta     { animation: fadeUp 0.5s 0.5s ease both; }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.5rem; }
+  .hero { padding: 5rem 1.5rem 3rem; }
+  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .impact-row { gap: 2rem; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">BK</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" style="max-width:1100px;margin:0 auto;width:100%;">
+  <p class="hero-eyebrow">Full-Stack · Data Engineering · AI Systems</p>
+  <h1 class="hero-name">Bhargavi<br><span>Kurukunda</span></h1>
+  <p class="hero-title">MS Computer Science, UCSB '26</p>
+  <p class="hero-bio">
+    I build systems that scale — from production infrastructure serving millions 
+    to AI pipelines that turn raw data into decisions. I also ship products people 
+    actually pay for.
+  </p>
+
+  <div class="impact-row">
+    <div class="impact-item">
+      <span class="impact-num"><span class="counter teal" data-target="11">0</span>M<span class="teal">+</span></span>
+      <span class="impact-label">Users served</span>
+    </div>
+    <div class="impact-item">
+      <span class="impact-num"><span class="counter teal" data-target="2">0</span>M<span class="teal">+</span></span>
+      <span class="impact-label">Financial instruments</span>
+    </div>
+    <div class="impact-item">
+      <span class="impact-num"><span class="counter teal" data-target="550">0</span><span class="teal">+</span></span>
+      <span class="impact-label">PoetryQuill users</span>
+    </div>
+    <div class="impact-item">
+      <span class="impact-num">$<span class="counter teal" data-target="60">0</span>K<span class="teal">+</span></span>
+      <span class="impact-label">Annual cost saved</span>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#projects" class="btn-primary">View my work</a>
+    <a href="mailto:bhargavi_kurukunda@ucsb.edu" class="btn-secondary">Get in touch</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Where I've worked</p>
+  <h2 class="section-title">Experience</h2>
+
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-date">Jan 2026 — Present</div>
+      <div>
+        <div class="exp-role">Graduate Teaching Assistant</div>
+        <div class="exp-company">UC Santa Barbara</div>
+        <ul class="exp-bullets">
+          <li>Lead weekly tutorial sessions for 170+ students across Foundations of Databases and HCI/UI/UX Design</li>
+          <li>Prepare original exercises, hold office hours twice weekly, and provide feedback on query design and interface prototypes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jun — Jul 2025</div>
+      <div>
+        <div class="exp-role">Data Science Intern</div>
+        <div class="exp-company">KSE Global</div>
+        <ul class="exp-bullets">
+          <li>Built behavioral cohort models reducing user churn by 15% across 20K+ accounts</li>
+          <li>Modeled LTV for 20K+ accounts; transformed 250K+ raw records into an analytics pipeline for executive decision-making</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Aug 2023 — May 2024</div>
+      <div>
+        <div class="exp-role">Software Engineer</div>
+        <div class="exp-company">Virtual Labs · Part-time, IIITH</div>
+        <ul class="exp-bullets">
+          <li>Built real-time OS simulation labs serving 11M+ users, enabling remote experiments at national scale</li>
+          <li>Re-architected backend storage and load balancing, saving $60K/year in cloud operational costs</li>
+          <li>Led beta testing with 150+ users; synthesized feedback into user personas shaping simulation UX</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jun — Aug 2023</div>
+      <div>
+        <div class="exp-role">Software Engineering Intern</div>
+        <div class="exp-company">Franklin Templeton · Return offer received</div>
+        <ul class="exp-bullets">
+          <li>Shipped a full-stack feature to 2M+ users — Java microservice backend and React frontend — for real-time retrieval of financial instrument metadata</li>
+          <li>Received a return offer for a full-time position</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Things I've built</p>
+  <h2 class="section-title">Projects</h2>
+
+  <div class="projects-grid">
+
+    <!-- FEATURED: PoetryQuill -->
+    <div class="project-card featured">
+      <div>
+        <span class="project-tag">Live Product</span>
+        <div class="project-name">Rhyme - A social platform for poets</div>
+        <p class="project-desc">
+          A Wattpad-style poetry writing platform built entirely solo — from architecture 
+          and payments to deployment and growth. Grew to 550+ active users and $200+ 
+          in premium subscription revenue through YouTube content marketing. 
+          Every decision was mine.
+        </p>
+        <div class="project-metrics">
+          <div class="metric">
+            <span class="metric-val">550+</span>
+            <span class="metric-key">Active users</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val">$200+</span>
+            <span class="metric-key">Revenue</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val">Solo</span>
+            <span class="metric-key">Built by</span>
+          </div>
+        </div>
+        <div class="project-links">
+          <a href="https://rhyme-poetry.vercel.app/auth/login" class="link-btn live">↗ Live site</a>
+          <a href="https://github.com/Bhargavi-hash/Rhyme" class="link-btn">GitHub</a>
+        </div>
+      </div>
+      <div>
+        <div class="project-stack" style="margin-bottom:1rem;">
+          <span class="stack-chip">React, Next.js</span>
+          <span class="stack-chip">PostgreSQL</span>
+          <span class="stack-chip">Supabase</span>
+          <span class="stack-chip">Stripe API</span>
+          <span class="stack-chip">JavaScript</span>
+          <span class="stack-chip">Vercel</span>
+        </div>
+        <div style="background:var(--navy);border:1px solid var(--border);border-radius:6px;padding:1.5rem;">
+          <p style="font-size:0.82rem;color:var(--cream-muted);line-height:1.75;">
+            "I built PoetryQuill because I wanted it to exist. 
+            That turned out to be the best product brief I've ever had — 
+            not because of the real users, or real money, but because of the design experience, the technical decisions and the API intergrations experience I have learnt through out the project."
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Moment AI -->
+    <div class="project-card">
+      <span class="project-tag">Google DeepMind Hackathon</span>
+      <div class="project-name">Moment AI — Viral Clips Extractor</div>
+      <p class="project-desc">
+        End-to-end AI pipeline that processes long-form video and automatically 
+        extracts viral short clips using engagement prediction. FastAPI + Redis 
+        inference backend, Gemini API for caption and tag generation.
+      </p>
+      <div class="project-stack">
+        <span class="stack-chip">FastAPI</span>
+        <span class="stack-chip">Redis</span>
+        <span class="stack-chip">Gemini API</span>
+        <span class="stack-chip">React</span>
+        <span class="stack-chip">Vercel</span>
+      </div>
+      <div class="project-links">
+        <a href="https://moment-sand.vercel.app/" class="link-btn live">↗ Try it</a>
+        <a href="https://github.com/Bhargavi-hash/MOMENT" class="link-btn">GitHub</a>
+      </div>
+    </div>
+
+    <!-- SyncLedger
+    <div class="project-card">
+      <span class="project-tag">Distributed Systems</span>
+      <div class="project-name">SyncLedger — Distributed Budget Tracker</div>
+      <p class="project-desc">
+        Personal finance tracker integrating the Plaid API for real-time bank data. 
+        Guarantees 100% budget consistency across distributed nodes using 
+        Raft consensus protocol.
+      </p>
+      <div class="project-stack">
+        <span class="stack-chip">Raft Consensus</span>
+        <span class="stack-chip">Plaid API</span>
+        <span class="stack-chip">PostgreSQL</span>
+        <span class="stack-chip">Jira API</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="link-btn">GitHub</a>
+      </div>
+    </div> -->
+
+    <!-- MCP -->
+    <div class="project-card">
+      <span class="project-tag">AI · MCP Protocol</span>
+      <div class="project-name">PoetryQuill Analytics MCP</div>
+      <p class="project-desc">
+        An MCP server connecting Claude to live PoetryQuill production data. 
+        Ask natural language questions about real users, content trends, and 
+        engagement — Claude queries the database and analyzes patterns directly.
+      </p>
+      <div class="project-stack">
+        <span class="stack-chip">MCP Protocol</span>
+        <span class="stack-chip">Claude API</span>
+        <span class="stack-chip">Python</span>
+        <span class="stack-chip">PostgreSQL</span>
+      </div>
+      <div class="project-links">
+        <a href="#" class="link-btn">GitHub</a>
+      </div>
+    </div>
+
+    <!-- Hotel Franchise DBMS -->
+<div class="project-card">
+  <span class="project-tag">Database Design · Undergrad</span>
+  <div class="project-name">Hotel Franchise DBMS</div>
+  <p class="project-desc">
+    A terminal-based database management system for a multi-branch 
+    hotel franchise. Designed the full relational schema — rooms, 
+    reservations, staff, billing — and implemented queries for 
+    reporting, availability tracking, and revenue analytics.
+  </p>
+  <div class="project-stack">
+    <span class="stack-chip">SQL</span>
+    <span class="stack-chip">MySQL</span>
+    <span class="stack-chip">Python</span>
+    <span class="stack-chip">Terminal UI</span>
+  </div>
+  <div class="project-links">
+    <a href="https://github.com/Bhargavi-hash/HotelFranchiseDBMS" class="link-btn">GitHub</a>
+  </div>
+</div>
+
+    <!-- Research -->
+    <div class="project-card">
+      <span class="project-tag">MS Research · UCSB · Paper Ongoing</span>
+      <div class="project-name">Pseudo-Realistic IoT Stream Generation</div>
+      <p class="project-desc">
+        A language framework for generating synthetic but statistically realistic 
+        IoT sensor and stock data streams. Enables testing of real-time data 
+        pipelines and anomaly detection systems without live data dependencies.
+      </p>
+      <div class="project-stack">
+        <span class="stack-chip">Python</span>
+        <span class="stack-chip">Datalog</span>
+        <span class="stack-chip">Stream Processing</span>
+        <span class="stack-chip">Statistical Modeling</span>
+      </div>
+      <div class="project-links">
+        <!-- <a href="#" class="link-btn">Paper</a> -->
+        <a href="#" class="link-btn">GitHub</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">What I work with</p>
+  <h2 class="section-title">Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <ul class="skill-list">
+        <li>Python</li>
+        <li>JavaScript / TypeScript</li>
+        <li>Java</li>
+        <li>Ruby</li>
+        <li>C++</li>
+        <li>SQL</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Backend & Data</div>
+      <ul class="skill-list">
+        <li>REST APIs · Microservices</li>
+        <li>FastAPI · Node.js · Rails</li>
+        <li>Kafka · Redis · MongoDB</li>
+        <li>PostgreSQL · MySQL</li>
+        <li>ETL Pipelines</li>
+        <li>Docker · Kubernetes</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">AI & ML</div>
+      <ul class="skill-list">
+        <li>Claude API · MCP Protocol</li>
+        <li>Gemini API · LangChain</li>
+        <li>Prompt Engineering</li>
+        <li>Scikit-learn · PyTorch</li>
+        <li>Cohort Modeling</li>
+        <li>Predictive Analytics</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Frontend & Tools</div>
+      <ul class="skill-list">
+        <li>React · Next.js</li>
+        <li>HTML · CSS</li>
+        <li>Figma</li>
+        <li>Git · GitHub</li>
+        <li>Google Analytics</li>
+        <li>Jira · Notion</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <p class="section-label" style="text-align:center;">What's next</p>
+  <h2 class="section-title" style="text-align:center;margin-bottom:1rem;">Let's work together</h2>
+  <p class="contact-sub">
+    I'm actively looking for full-stack and data engineering roles. 
+    If you're building something interesting, I'd love to hear about it.
+  </p>
+  <a href="mailto:bhargavi_kurukunda@ucsb.edu" class="btn-primary" style="margin:0 auto;display:inline-flex;">
+    bhargavi_kurukunda@ucsb.edu
+  </a>
+  <div class="social-links">
+    <a href="#" class="social-link">LinkedIn</a>
+    <a href="#" class="social-link">GitHub</a>
+    <a href="#" class="social-link">Resume</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-text">Bhargavi Kurukunda · MS CS, UCSB 2026</span>
+  <span class="footer-text">Built with care · Santa Barbara, CA</span>
+</footer>
+
+<script>
+// Counter animation
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const duration = 1200;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(ease * target);
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(update);
+}
+
+// Trigger on scroll into view
+const counters = document.querySelectorAll('.counter');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+counters.forEach(c => observer.observe(c));
+</script>
+
+</body>
+</html>
